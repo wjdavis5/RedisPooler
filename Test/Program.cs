@@ -1,8 +1,15 @@
-# RedisPooler
-A library to provide pooled IConnectionMultiplexers to your appliation
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using StackExchange.Redis;
 
-```
-var config = new ConfigurationOptions();
+namespace Test
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var config = new ConfigurationOptions();
             config.EndPoints.Add("127.0.0.1",6379);
             var connectionPooler = new RedisPooler.ConnectionPool(20,config,false);
             var nums = Enumerable.Range(1, 10000).ToList();
@@ -11,4 +18,6 @@ var config = new ConfigurationOptions();
                 connectionPooler.GetConnection().GetDatabase().StringSet(i.ToString(), i.ToString());
             });
             Console.WriteLine(connectionPooler.NumSpinsGettingConnection);
-```
+        }
+    }
+}

@@ -2,6 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>wjdavis5</Authors>
+    <Company>wjdavis5</Company>
+    <Description>A library to provide pooled IConnectionMultiplexers to your appliation</Description>
+    <PackageProjectUrl>https://github.com/wjdavis5/RedisPooler/tree/master/src</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/wjdavis5/RedisPooler/tree/master/src</RepositoryUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/wjdavis5/RedisPooler/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>
