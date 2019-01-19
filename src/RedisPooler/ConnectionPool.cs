@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using StackExchange.Redis;
 
@@ -8,6 +9,7 @@ namespace RedisPooler
 {
     public sealed class ConnectionPool : IConnectionPool
     {
+        public long NumSpinsGettingConnection = 0;
         public ConfigurationOptions RedisConfigurationOptions { get; }
         public bool UseLazyInit { get; }
         public TextWriter RedisTextWriterLog { get; }
@@ -48,6 +50,7 @@ namespace RedisPooler
             Lazy<Task<ConnectionMultiplexer>> connection = null;
             while (!ConnectionQueue.TryDequeue(out connection))
             {
+                Interlocked.Increment(ref NumSpinsGettingConnection);
                 continue;
             }
             ConnectionQueue.Enqueue(connection);

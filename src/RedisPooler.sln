@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisPooler", "RedisPooler\RedisPooler.csproj", "{F006C708-02A3-42F0-8101-ECFCCFCD387C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test.csproj", "{35039949-2FD8-462B-B864-0583244B0B59}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F006C708-02A3-42F0-8101-ECFCCFCD387C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F006C708-02A3-42F0-8101-ECFCCFCD387C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F006C708-02A3-42F0-8101-ECFCCFCD387C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35039949-2FD8-462B-B864-0583244B0B59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35039949-2FD8-462B-B864-0583244B0B59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35039949-2FD8-462B-B864-0583244B0B59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35039949-2FD8-462B-B864-0583244B0B59}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
