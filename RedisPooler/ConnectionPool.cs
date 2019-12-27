@@ -14,29 +14,26 @@ namespace RedisPooler
         public bool UseLazyInit { get; }
         public TextWriter RedisTextWriterLog { get; }
         public int PoolSize { get; }
-        private ConcurrentQueue<Lazy<Task<ConnectionMultiplexer>>> ConnectionQueue { get; }
+        private ConcurrentQueue<IConnectionMultiplexer> ConnectionQueue { get; }
 
         public ConnectionPool(int poolSize, ConfigurationOptions redisConfigurationOptions, bool useLazyInit = true,
             TextWriter redisTextWriterLog = null)
         {
-            RedisConfigurationOptions = redisConfigurationOptions;
+            if(poolSize <= 0) throw new Exception("Must pass in a value larger than 0");
+            RedisConfigurationOptions = redisConfigurationOptions ?? throw new ArgumentNullException(nameof(redisConfigurationOptions));
             UseLazyInit = useLazyInit;
             RedisTextWriterLog = redisTextWriterLog;
-            ConnectionQueue = new ConcurrentQueue<Lazy<Task<ConnectionMultiplexer>>>();
+            ConnectionQueue = new ConcurrentQueue<IConnectionMultiplexer>();
             PoolSize = poolSize;
             BuildPool();
         }
 
-        private void BuildPool()
+        private async void BuildPool()
         {
             for (var i = 0; i < PoolSize; i++)
             {
-                var lazyCon = new Lazy<Task<ConnectionMultiplexer>>(CreateRedisConnection);
-                if (!UseLazyInit)
-                {
-                    var val = lazyCon.Value;
-                }
-                ConnectionQueue.Enqueue(lazyCon);
+                var con = await CreateRedisConnection();
+                ConnectionQueue.Enqueue(con);
             }
         }
 
@@ -47,14 +44,14 @@ namespace RedisPooler
 
         public IConnectionMultiplexer GetConnection()
         {
-            Lazy<Task<ConnectionMultiplexer>> connection = null;
+            IConnectionMultiplexer connection;
             while (!ConnectionQueue.TryDequeue(out connection))
             {
                 Interlocked.Increment(ref NumSpinsGettingConnection);
                 continue;
             }
             ConnectionQueue.Enqueue(connection);
-            return connection.Value.GetAwaiter().GetResult();
+            return connection;
         }
     }
 }
