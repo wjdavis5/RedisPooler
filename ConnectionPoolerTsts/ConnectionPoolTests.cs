@@ -1,15 +1,15 @@
 using System;
-using FluentAssertions;
-using Moq;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RedisPooler;
-using StackExchange.Redis;
+using FluentAssertions;
 
-namespace ConnectionPoolTest
+
+namespace ConnectionPoolerTsts
 {
-    public class Tests
+    [TestClass]
+    public class ConnectionPoolTests
     {
-        [Test]
+        [TestMethod]
         public void Throws_if_configuration_is_null()
         {
             Action act = () =>
@@ -19,7 +19,7 @@ namespace ConnectionPoolTest
             act.Should().Throw<ArgumentNullException>("teh config was null!");
         }
 
-        [Test]
+        [TestMethod]
         public void Throws_if_poolsize_is_less_than_one()
         {
             Action act = () =>
@@ -28,6 +28,5 @@ namespace ConnectionPoolTest
             };
             act.Should().Throw<Exception>("the pool size was less than 1!");
         }
-
     }
 }
