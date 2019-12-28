@@ -1,6 +1,8 @@
 # RedisPooler
 A library to provide pooled IConnectionMultiplexers to your appliation
 
+[![Build Status](https://wjdavis5.visualstudio.com/RedisPooler/_apis/build/status/RedisPooler-CI?branchName=master)](https://wjdavis5.visualstudio.com/RedisPooler/_build/latest?definitionId=3&branchName=master)
+
 # Why
 We were plauged, as many are, by time out exceptions `StackExchange.Redis.RedisTimeoutException` 
 We found that the easiest way to address this issue was to implement a pool of IConnectionMultiplexors.
