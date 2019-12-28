@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionPooler.Test.Unit", "ConnectionPoolerTsts\ConnectionPooler.Test.Unit.csproj", "{3F6231DA-4EEF-4A4D-B97D-A3DDE975543C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionPooler.Test.Integration", "ConnectionPooler.Test.Integration\ConnectionPooler.Test.Integration.csproj", "{F4F4DDFA-C95B-460E-A7A2-714A24D68662}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{3F6231DA-4EEF-4A4D-B97D-A3DDE975543C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F6231DA-4EEF-4A4D-B97D-A3DDE975543C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F6231DA-4EEF-4A4D-B97D-A3DDE975543C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F4DDFA-C95B-460E-A7A2-714A24D68662}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F4DDFA-C95B-460E-A7A2-714A24D68662}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F4DDFA-C95B-460E-A7A2-714A24D68662}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F4DDFA-C95B-460E-A7A2-714A24D68662}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
