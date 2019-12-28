@@ -14,7 +14,7 @@ namespace RedisPooler
         public bool UseLazyInit { get; }
         public TextWriter RedisTextWriterLog { get; }
         public int PoolSize { get; }
-        private ConcurrentQueue<IConnectionMultiplexer> ConnectionQueue { get; }
+        public ConcurrentQueue<Lazy<Task<ConnectionMultiplexer>>> ConnectionQueue { get; }
 
         public ConnectionPool(int poolSize, ConfigurationOptions redisConfigurationOptions, bool useLazyInit = true,
             TextWriter redisTextWriterLog = null)
@@ -23,35 +23,39 @@ namespace RedisPooler
             RedisConfigurationOptions = redisConfigurationOptions ?? throw new ArgumentNullException(nameof(redisConfigurationOptions));
             UseLazyInit = useLazyInit;
             RedisTextWriterLog = redisTextWriterLog;
-            ConnectionQueue = new ConcurrentQueue<IConnectionMultiplexer>();
+            ConnectionQueue = new ConcurrentQueue<Lazy<Task<ConnectionMultiplexer>>>();
             PoolSize = poolSize;
             BuildPool();
         }
 
         private async void BuildPool()
         {
-            for (var i = 0; i < PoolSize; i++)
+            while(ConnectionQueue.Count < PoolSize)
             {
-                var con = await CreateRedisConnection();
+                var con = new Lazy<Task<ConnectionMultiplexer>>(LoadLazyConnection);
+                if (!UseLazyInit)
+                {
+                    await con.Value;
+                }
                 ConnectionQueue.Enqueue(con);
             }
         }
 
-        private Task<ConnectionMultiplexer> CreateRedisConnection()
+        private Task<ConnectionMultiplexer> LoadLazyConnection()
         {
             return ConnectionMultiplexer.ConnectAsync(RedisConfigurationOptions, RedisTextWriterLog);
         }
 
         public IConnectionMultiplexer GetConnection()
         {
-            IConnectionMultiplexer connection;
+            Lazy<Task<ConnectionMultiplexer>> connection;
             while (!ConnectionQueue.TryDequeue(out connection))
             {
                 Interlocked.Increment(ref NumSpinsGettingConnection);
                 continue;
             }
             ConnectionQueue.Enqueue(connection);
-            return connection;
+            return connection.Value.Result;
         }
     }
 }
