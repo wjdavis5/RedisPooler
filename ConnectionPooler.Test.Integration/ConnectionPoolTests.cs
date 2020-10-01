@@ -31,7 +31,7 @@ namespace ConnectionPooler.Test.Integration
             connection.Should().BeOfType<ConnectionMultiplexer>();
             var db = connection.GetDatabase();
 
-            Enumerable.Range(1, 100000).ToList().AsParallel().WithDegreeOfParallelism(10).ForAll(i =>
+            Enumerable.Range(1, 1000).ToList().AsParallel().ForAll(i =>
             {
                 var arbitraryvalue = "ArbitraryValue";
                 var arbitrarykeyname = $"ArbitraryKeyName:{i}";
